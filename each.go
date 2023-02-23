@@ -78,10 +78,8 @@ func (r EachRule) getInterface(value reflect.Value) interface{} {
 		if value.IsNil() {
 			return nil
 		}
-		return value.Elem().Interface()
-	default:
-		return value.Interface()
 	}
+	return value.Interface()
 }
 
 func (r EachRule) getString(value reflect.Value) string {
