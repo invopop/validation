@@ -20,7 +20,7 @@ type WhenRule struct {
 
 // Validate checks if the condition is true and if so, it validates the value using the specified rules.
 func (r WhenRule) Validate(value interface{}) error {
-	return r.ValidateWithContext(nil, value)
+	return r.ValidateWithContext(context.Background(), value)
 }
 
 // ValidateWithContext checks if the condition is true and if so, it validates the value using the specified rules.

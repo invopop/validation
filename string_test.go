@@ -100,7 +100,7 @@ func TestGetErrorFieldName(t *testing.T) {
 		T1 string `json:"t1"`
 		T2 string `json:"t2,omitempty"`
 		T3 string `json:",omitempty"`
-		T4 string `json:"t4,x1,omitempty"`
+		T4 string `json:"t4,x1,omitempty"` //nolint:staticcheck
 	}
 	tests := []struct {
 		tag   string
