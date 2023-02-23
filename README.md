@@ -95,10 +95,10 @@ type Address struct {
 
 func (a Address) Validate() error {
 	return validation.ValidateStruct(&a,
-		// Street cannot be empty, and the length must between 5 and 50
-		validation.Field(&a.Street, validation.Required, validation.Length(5, 50)),
-		// City cannot be empty, and the length must between 5 and 50
-		validation.Field(&a.City, validation.Required, validation.Length(5, 50)),
+		// Street cannot be empty, and the length must between 2 and 50
+		validation.Field(&a.Street, validation.Required, validation.Length(2, 50)),
+		// City cannot be empty, and the length must between 2 and 50
+		validation.Field(&a.City, validation.Required, validation.Length(2, 50)),
 		// State cannot be empty, and must be a string consisting of two letters in upper case
 		validation.Field(&a.State, validation.Required, validation.Match(regexp.MustCompile("^[A-Z]{2}$"))),
 		// State cannot be empty, and must be a string consisting of five digits
@@ -153,10 +153,10 @@ err := validation.Validate(c,
 		validation.Key("Email", validation.Required, is.Email),
 		// Validate Address using its own validation rules
 		validation.Key("Address", validation.Map(
-			// Street cannot be empty, and the length must between 5 and 50
-			validation.Key("Street", validation.Required, validation.Length(5, 50)),
-			// City cannot be empty, and the length must between 5 and 50
-			validation.Key("City", validation.Required, validation.Length(5, 50)),
+			// Street cannot be empty, and the length must between 2 and 50
+			validation.Key("Street", validation.Required, validation.Length(2, 50)),
+			// City cannot be empty, and the length must between 2 and 50
+			validation.Key("City", validation.Required, validation.Length(2, 50)),
 			// State cannot be empty, and must be a string consisting of two letters in upper case
 			validation.Key("State", validation.Required, validation.Match(regexp.MustCompile("^[A-Z]{2}$"))),
 			// State cannot be empty, and must be a string consisting of five digits
@@ -451,8 +451,8 @@ The following code implements the aforementioned examples:
 ```go
 result := validation.ValidateStruct(&a,
     validation.Field(&a.Unit, validation.When(a.Quantity != "", validation.Required).Else(validation.Nil)),
-    validation.Field(&a.Phone, validation.When(a.Email == "", validation.Required.Error('Either phone or Email is required.')),
-    validation.Field(&a.Email, validation.When(a.Phone == "", validation.Required.Error('Either phone or Email is required.')),
+    validation.Field(&a.Phone, validation.When(a.Email == "", validation.Required.Error("Either phone or Email is required.")),
+    validation.Field(&a.Email, validation.When(a.Phone == "", validation.Required.Error("Either phone or Email is required.")),
 )
 ```
 
@@ -463,8 +463,8 @@ The above code can also be simplified using the shortcut `validation.Required.Wh
 ```go
 result := validation.ValidateStruct(&a,
     validation.Field(&a.Unit, validation.Required.When(a.Quantity != ""), validation.Nil.When(a.Quantity == "")),
-    validation.Field(&a.Phone, validation.Required.When(a.Email == "").Error('Either phone or Email is required.')),
-    validation.Field(&a.Email, validation.Required.When(a.Phone == "").Error('Either phone or Email is required.')),
+    validation.Field(&a.Phone, validation.Required.When(a.Email == "").Error("Either phone or Email is required.")),
+    validation.Field(&a.Email, validation.Required.When(a.Phone == "").Error("Either phone or Email is required.")),
 )
 ```
 
@@ -659,6 +659,7 @@ Below is the whole list of the rules provided by the `is` package:
 - `UUIDv4`: validates if a string is a valid version 4 UUID
 - `UUIDv5`: validates if a string is a valid version 5 UUID
 - `UUID`: validates if a string is a valid UUID
+- `ULID`: validates if a string is a valid ULID
 - `CreditCard`: validates if a string is a valid credit card number
 - `ISBN10`: validates if a string is an ISBN version 10
 - `ISBN13`: validates if a string is an ISBN version 13
