@@ -58,6 +58,8 @@ var (
 	ErrUUIDv5 = validation.NewError("validation_is_uuid_v5", "must be a valid UUID v5")
 	// ErrUUID is the error that returns in case of an invalid UUID value.
 	ErrUUID = validation.NewError("validation_is_uuid", "must be a valid UUID")
+	// ErrULID is the error that returns in case of an invalid ULID value.
+	ErrULID = validation.NewError("validation_is_ulid", "must be a valid ULID")
 	// ErrCreditCard is the error that returns in case of an invalid credit card number.
 	ErrCreditCard = validation.NewError("validation_is_credit_card", "must be a valid credit card number")
 	// ErrISBN10 is the error that returns in case of an invalid ISBN-10 value.
