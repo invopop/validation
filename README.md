@@ -7,7 +7,7 @@
 [![Go Report](https://goreportcard.com/badge/github.com/invopop/validation)](https://goreportcard.com/report/github.com/invopop/validation)
 ![Latest Tag](https://img.shields.io/github/v/tag/invopop/validation)
 
-NOTE: As of Feb 2023, this is a fork of the well known [ozzo-validation](https://github.com/go-ozzo/ozzo-validation) package which doesn't appear to be under active maintenance for more than 2 years. At [Invopop](https://invopop.com) we use this library extensively, so it only felt appropriate to be more pro-active. We'll do out best to respond to issues and review or merge any pull requests.
+NOTE: This is a fork of the well known [ozzo-validation](https://github.com/go-ozzo/ozzo-validation) package which as of Feb 2023 doesn't appear to be under active maintenance for more than 2 years. At [Invopop](https://invopop.com) we use this library extensively, so it only felt appropriate to be more pro-active. We'll do out best to respond to issues and review or merge any pull requests.
 
 ## Description
 
