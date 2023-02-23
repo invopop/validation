@@ -76,7 +76,7 @@ func TestEachWithContext(t *testing.T) {
 func TestEachAndBy(t *testing.T) {
 	var byAddr bool
 	var s string
-	Each(By(func(v interface{}) error {
+	_ = Each(By(func(v interface{}) error {
 		_, byAddr = v.(*string)
 		return nil
 	})).Validate([]*string{&s})
