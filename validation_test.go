@@ -268,3 +268,9 @@ func (s StringValidateContext) ValidateWithContext(context.Context) error {
 	}
 	return nil
 }
+
+func TestValidateAgainstList(t *testing.T) {
+	optionsList := []string{"a", "b", "c"}
+
+	assert.NoError(t, Validate("a", In(optionsList...)))
+}
