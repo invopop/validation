@@ -272,5 +272,9 @@ func (s StringValidateContext) ValidateWithContext(context.Context) error {
 func TestValidateAgainstList(t *testing.T) {
 	optionsList := []string{"a", "b", "c"}
 
+	// I've always felt that this was dangerous
+	assert.Error(t, Validate("a", In(optionsList)))
+
+	// This is better, no need to convert to interface
 	assert.NoError(t, Validate("a", In(optionsList...)))
 }
