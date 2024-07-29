@@ -199,7 +199,11 @@ func validateSlice(rv reflect.Value) error {
 	errs := Errors{}
 	l := rv.Len()
 	for i := 0; i < l; i++ {
-		if ev := rv.Index(i).Interface(); ev != nil {
+		v := rv.Index(i)
+		if v.Kind() == reflect.Ptr && v.IsNil() {
+			continue
+		}
+		if ev := v.Interface(); ev != nil {
 			if err := ev.(Validatable).Validate(); err != nil {
 				errs[strconv.Itoa(i)] = err
 			}
@@ -216,7 +220,11 @@ func validateSliceWithContext(ctx context.Context, rv reflect.Value) error {
 	errs := Errors{}
 	l := rv.Len()
 	for i := 0; i < l; i++ {
-		if ev := rv.Index(i).Interface(); ev != nil {
+		v := rv.Index(i)
+		if v.Kind() == reflect.Ptr && v.IsNil() {
+			continue
+		}
+		if ev := v.Interface(); ev != nil {
 			if err := ev.(ValidatableWithContext).ValidateWithContext(ctx); err != nil {
 				errs[strconv.Itoa(i)] = err
 			}

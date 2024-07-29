@@ -70,6 +70,7 @@ func TestValidateStruct(t *testing.T) {
 	m3 := Model2{}
 	m4 := Model2{M3: Model3{A: "abc"}, Model3: Model3{A: "abc"}}
 	m5 := Model2{Model3: Model3{A: "internal"}}
+	m6 := Model2{M3AP: []*Model3{nil}}
 	tests := []struct {
 		tag   string
 		model interface{}
@@ -120,6 +121,8 @@ func TestValidateStruct(t *testing.T) {
 		{"t8.6", &m4, []*FieldRules{Field(&m4.Model3)}, ""},
 		{"t8.7", &m3, []*FieldRules{Field(&m3.A, Required), Field(&m3.B, Required)}, "A: cannot be blank; B: cannot be blank."},
 		{"t8.8", &m3, []*FieldRules{Field(&m4.A, Required)}, "field #0 cannot be found in the struct"},
+		{"t8.9", &m6, []*FieldRules{Field(&m6.M3AP)}, ""},
+		{"t8.10", &m6, []*FieldRules{Field(&m6.M3AP, Each(NotNil))}, "M3AP: (0: is required.)."},
 		// internal error
 		{"t9.1", &m5, []*FieldRules{Field(&m5.A, &validateAbc{}), Field(&m5.B, Required), Field(&m5.A, &validateInternalError{})}, "error internal"},
 	}
@@ -149,6 +152,7 @@ func TestValidateStructWithContext(t *testing.T) {
 	m1 := Model1{A: "abc", B: "xyz", c: "abc", G: "xyz"}
 	m2 := Model2{Model3: Model3{A: "internal"}}
 	m3 := Model5{}
+	m6 := Model2{M4AP: []*Model4{nil}}
 	tests := []struct {
 		tag   string
 		model interface{}
@@ -165,6 +169,9 @@ func TestValidateStructWithContext(t *testing.T) {
 		{"t2.2", &m1, []*FieldRules{Field(&m1.G, &validateContextAbc{}, Skip)}, "g: error abc."},
 		// internal error
 		{"t3.1", &m2, []*FieldRules{Field(&m2.A, &validateContextAbc{}), Field(&m2.B, Required), Field(&m2.A, &validateInternalError{})}, "error internal"},
+		// with custom validate methods
+		{"t4.1", &m6, []*FieldRules{Field(&m6.M4AP)}, ""},
+		{"t4.2", &m6, []*FieldRules{Field(&m6.M4AP, Each(NotNil))}, "M4AP: (0: is required.)."},
 	}
 	for _, test := range tests {
 		err := ValidateStructWithContext(context.Background(), test.model, test.rules...)

@@ -33,7 +33,6 @@ func TestEach(t *testing.T) {
 		{"t13", []interface{}{nil, a}, "0: cannot be blank; 1: cannot be blank."},
 		{"t14", []interface{}{c0, c1, f}, "0: cannot be blank."},
 	}
-
 	for _, test := range tests {
 		r := Each(Required)
 		err := r.Validate(test.value)

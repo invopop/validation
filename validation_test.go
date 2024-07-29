@@ -217,8 +217,10 @@ func (s String123) Validate() error {
 
 type Model2 struct {
 	Model3
-	M3 Model3
-	B  string
+	M3   Model3
+	M3AP []*Model3
+	M4AP []*Model4
+	B    string
 }
 
 type Model3 struct {
