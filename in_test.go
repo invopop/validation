@@ -37,6 +37,30 @@ func TestIn(t *testing.T) {
 	}
 }
 
+func TestIn_Generics(t *testing.T) {
+	var v = "a"
+	var v2 *string
+	tests := []struct {
+		tag    string
+		values []string
+		value  any
+		err    string
+	}{
+		{"t0", []string{"a", "b", "c"}, "a", ""},
+		{"t1", []string{"a", "b", "c"}, "d", "must be a valid value"},
+		{"t2", []string{"a", "b"}, &v, ""},
+		{"t3", []string{"a", "b"}, v2, ""},
+		{"t4", []string{"a", "b"}, nil, ""},
+		{"t5", []string{}, "a", "must be a valid value"},
+	}
+
+	for _, test := range tests {
+		r := In(test.values...)
+		err := r.Validate(test.value)
+		assertError(t, test.err, err, test.tag)
+	}
+}
+
 func Test_InRule_Error(t *testing.T) {
 	r := In(1, 2, 3)
 	val := 4
@@ -54,4 +78,12 @@ func TestInRule_ErrorObject(t *testing.T) {
 	assert.Equal(t, err, r.err)
 	assert.Equal(t, err.Code(), r.err.Code())
 	assert.Equal(t, err.Message(), r.err.Message())
+}
+
+func TestValidateAgainstList(t *testing.T) {
+	optionsList := []string{"a", "b", "c"}
+	// I've always felt that this was dangerous
+	assert.ErrorContains(t, Validate("a", In(optionsList)), "must be a valid value")
+	// This is better, no need to convert to interface
+	assert.NoError(t, Validate("a", In(optionsList...)))
 }
