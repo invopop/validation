@@ -36,6 +36,32 @@ func TestNotIn(t *testing.T) {
 	}
 }
 
+func TestNotIn_Ints(t *testing.T) {
+	v := 1
+	var v2 *int
+	var tests = []struct {
+		tag    string
+		values []int
+		value  any
+		err    string
+	}{
+		{"t0", []int{1, 2}, 0, ""},
+		{"t1", []int{1, 2}, 1, "must not be in list"},
+		{"t2", []int{1, 2}, 2, "must not be in list"},
+		{"t3", []int{1, 2}, 3, ""},
+		{"t4", []int{}, 3, ""},
+		{"t5", []int{1, 2}, "1", ""},
+		{"t6", []int{1, 2}, &v, "must not be in list"},
+		{"t7", []int{1, 2}, v2, ""},
+	}
+
+	for _, test := range tests {
+		r := NotIn(test.values...)
+		err := r.Validate(test.value)
+		assertError(t, test.err, err, test.tag)
+	}
+}
+
 func Test_NotInRule_Error(t *testing.T) {
 	r := NotIn(1, 2, 3)
 	assert.Equal(t, "must not be in list", r.Validate(1).Error())
