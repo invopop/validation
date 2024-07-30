@@ -3,7 +3,7 @@
 [![Lint](https://github.com/invopop/validation/actions/workflows/lint.yaml/badge.svg)](https://github.com/invopop/validation/actions/workflows/lint.yaml)
 [![Test Go](https://github.com/invopop/validation/actions/workflows/test.yaml/badge.svg)](https://github.com/invopop/validation/actions/workflows/test.yaml)
 [![GoDoc](https://godoc.org/github.com/invopop/validation?status.png)](http://godoc.org/github.com/invopop/validation)
-[![Coverage Status](https://coveralls.io/repos/github/invopop/validation/badge.svg?branch=main)](https://coveralls.io/github/invopop/validation?branch=main)
+[![Coverage Status](https://codecov.io/gh/invopop/validation/graph/badge.svg?token=Q3AEO8GZ8G)](https://codecov.io/gh/invopop/validation)
 [![Go Report](https://goreportcard.com/badge/github.com/invopop/validation)](https://goreportcard.com/report/github.com/invopop/validation)
 ![Latest Tag](https://img.shields.io/github/v/tag/invopop/validation)
 
