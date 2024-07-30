@@ -30,7 +30,7 @@ For further examples, checkout the [GOBL project](https://github.com/invopop/gob
 
 ## Requirements
 
-Go 1.16 or above.
+Latest supported Go (1.20) or later.
 
 ## Getting Started
 
